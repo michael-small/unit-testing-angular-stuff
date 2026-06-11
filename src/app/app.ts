@@ -1,12 +1,10 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  template: `
+    <h1>Unit testing practice</h1>
+    <p>I tried to unit test a component today. It went bad.</p>
+  `,
 })
-export class App {
-  protected readonly title = signal('unit-testing-angular-stuff');
-}
+export class App {}
