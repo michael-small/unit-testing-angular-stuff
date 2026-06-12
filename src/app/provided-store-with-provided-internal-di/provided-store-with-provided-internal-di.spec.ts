@@ -17,12 +17,16 @@ const StoreStub = signalStore(
   }),
 );
 
-describe('Thing component (root store in component)', async () => {
+describe('Thing component (provided store with internal DI)', async () => {
   let component: Thing;
   let fixture: ComponentFixture<Thing>;
+
   beforeEach(async () => {
-    TestBed.configureTestingModule({
-      providers: [{ provide: Store, useClass: StoreStub }],
+    // https://angular.dev/guide/testing/components-scenarios#override-component-providers
+    TestBed.configureTestingModule({}).overrideComponent(Thing, {
+      set: {
+        providers: [{ provide: Store, useClass: StoreStub }],
+      },
     });
     fixture = TestBed.createComponent(Thing);
     component = fixture.componentInstance;
@@ -31,7 +35,6 @@ describe('Thing component (root store in component)', async () => {
   it('can mutate state after clicking a button', async () => {
     fixture.nativeElement.querySelector('button').click();
     await fixture.whenStable();
-    fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('p').textContent.trim()).toBe('It worked');
   });
 });
